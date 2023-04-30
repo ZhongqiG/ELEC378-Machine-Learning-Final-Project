@@ -5,20 +5,26 @@ Performs a 2D PCA
 from sklearn.decomposition import PCA
 
 def get_pca_of_matrix(data):
+
   pca = PCA(n_components=2)
   data_reduced = pca.fit_transform(data)
-  print("variance_ratio = "+ str(pca.explained_variance_ratio_))
-  return data_reduced
 
-def plot_labelled_pca(data_reduced, y, title):
+  return data_reduced, pca.explained_variance_ratio_
+
+def plot_labelled_pca(data, y, title):
+  data_reduced, variance = get_pca_of_matrix(data)
+
   emotion_list = ['happy', 'angry', 'sad', 'disgust', 'fearful', 'surprised', 'calm', 'neurtal']
-  colors = ["orange", "red", "blue", "green", "gray", "yellow", "purple", "indigo"]
+  colors =       ["orange", "red", "blue", "green", "gray", "yellow", "purple", "indigo"]
 
   plt.figure()
   for idx, emotion in enumerate(emotion_list):
     indicies = np.where(y == emotion)[0]
     my_color = colors[idx]
+
     plt.scatter(data_reduced[indicies][:,0], data_reduced[indicies][:,1], color=my_color)
- 
-  plt.title(title)
-  plt.legend(emotion_list)
+  
+  plt.title(title + " with variance of " + str(variance))
+
+  plt.legend(emotion_list, fontsize='x-small')
+
