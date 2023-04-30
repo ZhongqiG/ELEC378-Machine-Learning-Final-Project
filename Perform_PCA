@@ -21,3 +21,4 @@ def plot_labelled_pca(data_reduced, y, title):
     plt.scatter(data_reduced[indicies][:,0], data_reduced[indicies][:,1], color=my_color)
  
   plt.title(title)
+  plt.legend(emotion_list)
